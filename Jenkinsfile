@@ -31,9 +31,9 @@ pipeline {
          stage('Docker Build') {
             steps {
                script{
-                   withDockerRegistry(credentialsId: '9ea0c4b0-721f-4219-be62-48a976dbeec0') {
+                   withDockerRegistry(credentialsId: 'docker') {
                     sh "docker build -t  todoapp:latest -f docker/Dockerfile . "
-                    sh "docker tag todoapp:latest username/todoapp:latest "
+                    sh "docker tag todoapp:latest jinesh1893/todoapp:latest "
                  }
                }
             }
@@ -42,22 +42,22 @@ pipeline {
         stage('Docker Push') {
             steps {
                script{
-                   withDockerRegistry(credentialsId: '9ea0c4b0-721f-4219-be62-48a976dbeec0') {
-                    sh "docker push  username/todoapp:latest "
+                   withDockerRegistry(credentialsId: 'docker') {
+                    sh "docker push  jinesh1893/todoapp:latest "
                  }
                }
             }
         }
         stage('trivy') {
             steps {
-               sh " trivy username/todoapp:latest"
+               sh " trivy jinesh1893/todoapp:latest"
             }
         }
 		stage('Deploy to Docker') {
             steps {
                script{
-                   withDockerRegistry(credentialsId: '9ea0c4b0-721f-4219-be62-48a976dbeec0') {
-                    sh "docker run -d --name to-do-app -p 4000:4000 username/todoapp:latest "
+                   withDockerRegistry(credentialsId: 'docker') {
+                    sh "docker run -d --name to-do-app -p 6000:6000 jinesh1893/todoapp:latest "
                  }
                }
             }

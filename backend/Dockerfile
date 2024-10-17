@@ -5,7 +5,7 @@ FROM node:14-alpine3.12
 WORKDIR /app
 
 # Copy package.json and package-lock.json for dependency installation
-COPY package*.json ./
+COPY backend/package*.json ./
 
 # Install dependencies
 RUN npm install --production
